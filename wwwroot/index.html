@@ -44,7 +44,8 @@
                 alert('Pet added successfully!');
                 clearFields();
             } else {
-                alert('Error adding pet.');
+                const errorText = await response.text();
+                alert(`Error adding pet: ${errorText}`);
             }
         }
 

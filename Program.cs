@@ -22,7 +22,12 @@ public partial class Program
 
         app.MapPost("/API/V1/Pets", (Pet pet) =>
         {
-            dBManager.PostLemmikki(pet.name, pet.type, pet.omistaja_name);
+            bool success = dBManager.PostLemmikki(pet.name, pet.type, pet.omistaja_name);
+            if (!success)
+            {
+                return Results.BadRequest("Owner not found. Pet could not be added.");
+            }
+            return Results.Ok("Pet added successfully.");
         });
 
         app.MapPost("/API/V1/Owners", (Owner owner) =>
@@ -63,20 +68,41 @@ public partial class Program
                 return Results.BadRequest("NewNumber is required.");
             }
 
-            dBManager.UpdateOmistajaNumber(id, request.NewNumber);
-            return Results.Ok();
+            try
+            {
+                dBManager.UpdateOmistajaNumber(id, request.NewNumber);
+                return Results.Ok("Owner number updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message); // Return error message
+            }
         });
 
         app.MapDelete("/API/V1/Owners/{id}", (int id) =>
         {
-            dBManager.DeleteOwner(id);
-            return Results.Ok();
+            try
+            {
+                dBManager.DeleteOwner(id);
+                return Results.Ok("Owner deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message); // Return error message
+            }
         });
 
         app.MapDelete("/API/V1/Pets/{id}", (int id) =>
         {
-            dBManager.DeletePet(id);
-            return Results.Ok();
+            try
+            {
+                dBManager.DeletePet(id);
+                return Results.Ok("Pet deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message); // Return error message
+            }
         });
 
         app.UseStaticFiles(); // This should be after all route definitions

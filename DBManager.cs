@@ -49,7 +49,7 @@ namespace lemmikkiAPI_esimerkki
             }
         }
 
-        public void PostLemmikki(string name, string type, string omistaja_Name)
+        public bool PostLemmikki(string name, string type, string omistaja_Name)
         {
             string command = @"INSERT INTO Lemmikit (Name, Type, Omistaja_Id) VALUES ($Name, $Type, $Omistaja_Id)";
             using (var sqlcommand = dbConnection.CreateCommand())
@@ -60,12 +60,16 @@ namespace lemmikkiAPI_esimerkki
 
                 // Get the owner ID
                 int? omistaja_Id = GetOwnerId(omistaja_Name);
-                if (omistaja_Id == null) return;
+                if (omistaja_Id == null)
+                {
+                    return false; // Owner not found
+                }
 
                 sqlcommand.Parameters.AddWithValue("$Omistaja_Id", omistaja_Id);
                 dbConnection.Open();
                 sqlcommand.ExecuteNonQuery();
                 dbConnection.Close();
+                return true; // Successfully added pet
             }
         }
 
@@ -85,25 +89,20 @@ namespace lemmikkiAPI_esimerkki
 
         public void UpdateOmistajaNumber(int ownerId, string newNumber)
         {
-            try
+            if (!OwnerExists(ownerId))
             {
-                string command = @"UPDATE Omistajat SET Number = $newNumber WHERE Id = $ownerId";
-                using (var sqlcommand = dbConnection.CreateCommand())
-                {
-                    sqlcommand.CommandText = command;
-                    sqlcommand.Parameters.AddWithValue("$ownerId", ownerId);
-                    sqlcommand.Parameters.AddWithValue("$newNumber", newNumber);
+                throw new Exception("ID not found.");
+            }
 
-                    dbConnection.Open();
-                    sqlcommand.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
+            string command = @"UPDATE Omistajat SET Number = $newNumber WHERE Id = $ownerId";
+            using (var sqlcommand = dbConnection.CreateCommand())
             {
-                Console.WriteLine($"Error updating owner number: {ex.Message}");
-            }
-            finally
-            {
+                sqlcommand.CommandText = command;
+                sqlcommand.Parameters.AddWithValue("$ownerId", ownerId);
+                sqlcommand.Parameters.AddWithValue("$newNumber", newNumber);
+
+                dbConnection.Open();
+                sqlcommand.ExecuteNonQuery();
                 dbConnection.Close();
             }
         }
@@ -164,49 +163,65 @@ namespace lemmikkiAPI_esimerkki
 
         public void DeleteOwner(int ownerId)
         {
-            try
+            if (!OwnerExists(ownerId))
             {
-                string command = @"DELETE FROM Omistajat WHERE Id = $ownerId";
-                using (var sqlcommand = dbConnection.CreateCommand())
-                {
-                    sqlcommand.CommandText = command;
-                    sqlcommand.Parameters.AddWithValue("$ownerId", ownerId);
-                    dbConnection.Open();
-                    sqlcommand.ExecuteNonQuery();
-                    dbConnection.Close();
-                }
+                throw new Exception("ID not found.");
             }
-            catch (Exception ex)
+
+            string command = @"DELETE FROM Omistajat WHERE Id = $ownerId";
+            using (var sqlcommand = dbConnection.CreateCommand())
             {
-                Console.WriteLine($"Error deleting owner: {ex.Message}");
-            }
-            finally
-            {
+                sqlcommand.CommandText = command;
+                sqlcommand.Parameters.AddWithValue("$ownerId", ownerId);
+                dbConnection.Open();
+                sqlcommand.ExecuteNonQuery();
                 dbConnection.Close();
             }
         }
 
         public void DeletePet(int petId)
         {
-            try
+            if (!PetExists(petId))
             {
-                string command = @"DELETE FROM Lemmikit WHERE Id = $petId";
-                using (var sqlcommand = dbConnection.CreateCommand())
-                {
-                    sqlcommand.CommandText = command;
-                    sqlcommand.Parameters.AddWithValue("$petId", petId);
-                    dbConnection.Open();
-                    sqlcommand.ExecuteNonQuery();
-                    dbConnection.Close();
-                }
+                throw new Exception("ID not found.");
             }
-            catch (Exception ex)
+
+            string command = @"DELETE FROM Lemmikit WHERE Id = $petId";
+            using (var sqlcommand = dbConnection.CreateCommand())
             {
-                Console.WriteLine($"Error deleting pet: {ex.Message}");
-            }
-            finally
-            {
+                sqlcommand.CommandText = command;
+                sqlcommand.Parameters.AddWithValue("$petId", petId);
+                dbConnection.Open();
+                sqlcommand.ExecuteNonQuery();
                 dbConnection.Close();
+            }
+        }
+
+        private bool OwnerExists(int ownerId)
+        {
+            string command = "SELECT COUNT(*) FROM Omistajat WHERE Id = $ownerId";
+            using (var sqlcommand = dbConnection.CreateCommand())
+            {
+                sqlcommand.CommandText = command;
+                sqlcommand.Parameters.AddWithValue("$ownerId", ownerId);
+                dbConnection.Open();
+                int count = Convert.ToInt32(sqlcommand.ExecuteScalar());
+                dbConnection.Close();
+                return count > 0;
+            }
+        }
+
+        private bool PetExists(int petId)
+        {
+            string command = "SELECT COUNT(*) FROM Lemmikit WHERE Id = $petId";
+            using (var sqlcommand = dbConnection.CreateCommand())
+            {
+                sqlcommand.CommandText = command;
+                sqlcommand.Parameters.AddWithValue("$petId", petId);
+                dbConnection.Open();
+                int count = Convert.ToInt32(sqlcommand.ExecuteScalar());
+                dbConnection.Close();
+                return count > 0;
             }
         }
     }
