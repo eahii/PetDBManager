@@ -37,7 +37,14 @@ public partial class Program
 
         app.MapGet("/API/V1/Pets/{petName}/Owner/Number", (string petName) =>
         {
-            return dBManager.GetOmistajaNumberFromLemmikkiName(petName);
+            try
+            {
+                return dBManager.GetOmistajaNumberFromLemmikkiName(petName);
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message); // Return error message
+            }
         });
 
         app.MapGet("/API/V1/Owners", () =>

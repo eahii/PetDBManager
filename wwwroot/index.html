@@ -53,9 +53,14 @@
             const petName = document.getElementById('getPetName').value;
 
             const response = await fetch(`/API/V1/Pets/${petName}/Owner/Number`);
-            const number = await response.text();
 
-            document.getElementById('ownerNumberDisplay').innerText = number ? `Owner Number: ${number}` : 'Owner not found.';
+            if (response.ok) {
+                const number = await response.text();
+                document.getElementById('ownerNumberDisplay').innerText = `Owner Number: ${number}`;
+            } else {
+                const errorText = await response.text();
+                document.getElementById('ownerNumberDisplay').innerText = errorText; // Display error message
+            }
         }
 
         async function fetchOwners() {

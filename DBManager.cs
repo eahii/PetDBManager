@@ -109,7 +109,10 @@ namespace lemmikkiAPI_esimerkki
 
         public object? GetOmistajaNumberFromLemmikkiName(string lemmikkiName)
         {
-            string command = @"SELECT Omistajat.Number FROM Omistajat LEFT JOIN Lemmikit ON Omistajat.Id=Lemmikit.Omistaja_Id WHERE Lemmikit.Name=$lemmikkiName AND lemmikit.Omistaja_Id=Omistajat.Id";
+            string command = @"SELECT Omistajat.Number FROM Omistajat 
+                               LEFT JOIN Lemmikit ON Omistajat.Id=Lemmikit.Omistaja_Id 
+                               WHERE Lemmikit.Name=$lemmikkiName";
+
             using (var sqlcommand = dbConnection.CreateCommand())
             {
                 sqlcommand.CommandText = command;
@@ -117,6 +120,12 @@ namespace lemmikkiAPI_esimerkki
                 dbConnection.Open();
                 object? result = sqlcommand.ExecuteScalar();
                 dbConnection.Close();
+
+                if (result == null)
+                {
+                    throw new Exception("Invalid pet name."); // Throw an exception if pet name is not found
+                }
+
                 return result;
             }
         }
