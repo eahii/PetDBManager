@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet and Owner Database</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        async function postOwner() {
+            const name = document.getElementById('ownerName').value;
+            const number = document.getElementById('ownerNumber').value;
+
+            const response = await fetch('/API/V1/Owners', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, number }),
+            });
+
+            if (response.ok) {
+                alert('Owner added successfully!');
+                clearFields();
+            } else {
+                alert('Error adding owner.');
+            }
+        }
+
+        async function postPet() {
+            const name = document.getElementById('petName').value;
+            const type = document.getElementById('petType').value;
+            const ownerName = document.getElementById('petOwnerName').value;
+
+            const response = await fetch('/API/V1/Pets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, type, omistaja_name: ownerName }),
+            });
+
+            if (response.ok) {
+                alert('Pet added successfully!');
+                clearFields();
+            } else {
+                alert('Error adding pet.');
+            }
+        }
+
+        async function getOwnerNumber() {
+            const petName = document.getElementById('getPetName').value;
+
+            const response = await fetch(`/API/V1/Pets/${petName}/Owner/Number`);
+            const number = await response.text();
+
+            document.getElementById('ownerNumberDisplay').innerText = number ? `Owner Number: ${number}` : 'Owner not found.';
+        }
+
+        async function fetchOwners() {
+            const response = await fetch('/API/V1/Owners');
+            const owners = await response.json();
+            const ownersTableBody = document.getElementById('ownersTable').getElementsByTagName('tbody')[0];
+            ownersTableBody.innerHTML = ''; // Clear existing rows
+
+            owners.forEach(owner => {
+                const row = ownersTableBody.insertRow();
+                row.insertCell(0).innerText = owner.id;
+                row.insertCell(1).innerText = owner.name;
+                row.insertCell(2).innerText = owner.number;
+            });
+        }
+
+        async function fetchPets() {
+            const response = await fetch('/API/V1/Pets');
+            const pets = await response.json();
+            const petsTableBody = document.getElementById('petsTable').getElementsByTagName('tbody')[0];
+            petsTableBody.innerHTML = ''; // Clear existing rows
+
+            pets.forEach(pet => {
+                const row = petsTableBody.insertRow();
+                row.insertCell(0).innerText = pet.id;
+                row.insertCell(1).innerText = pet.name;
+                row.insertCell(2).innerText = pet.type;
+                row.insertCell(3).innerText = pet.omistaja_name;
+            });
+        }
+
+        function clearFields() {
+            document.getElementById('ownerName').value = '';
+            document.getElementById('ownerNumber').value = '';
+            document.getElementById('petName').value = '';
+            document.getElementById('petType').value = '';
+            document.getElementById('petOwnerName').value = '';
+            document.getElementById('getPetName').value = '';
+            document.getElementById('ownerNumberDisplay').innerText = '';
+            document.getElementById('updateOwnerId').value = '';
+            document.getElementById('updateOwnerNumber').value = '';
+            document.getElementById('deleteOwnerId').value = '';
+            document.getElementById('deletePetId').value = '';
+        }
+
+        async function updateOwnerNumber() {
+            const ownerId = document.getElementById('updateOwnerId').value;
+            const newNumber = document.getElementById('updateOwnerNumber').value;
+
+            if (!ownerId || !newNumber) {
+                alert('Both fields are required.');
+                return;
+            }
+
+            console.log('Updating Owner:', { ownerId, newNumber });
+
+            const response = await fetch(`/API/V1/Owners/${ownerId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ newNumber }),
+            });
+
+            if (response.ok) {
+                alert('Owner number updated successfully!');
+                clearFields();
+            } else {
+                const errorText = await response.text();
+                alert(`Error updating owner number: ${errorText}`);
+            }
+        }
+
+        async function deleteOwner() {
+            const ownerId = document.getElementById('deleteOwnerId').value;
+
+            const response = await fetch(`/API/V1/Owners/${ownerId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                alert('Owner deleted successfully!');
+                clearFields();
+            } else {
+                alert('Error deleting owner.');
+            }
+        }
+
+        async function deletePet() {
+            const petId = document.getElementById('deletePetId').value;
+
+            const response = await fetch(`/API/V1/Pets/${petId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                alert('Pet deleted successfully!');
+                clearFields();
+            } else {
+                alert('Error deleting pet.');
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Pet Database Manager</h1>
+
+    <h2>Add Owner</h2>
+    <input type="text" id="ownerName" placeholder="Owner Name" required>
+    <input type="text" id="ownerNumber" placeholder="Owner Number" required>
+    <button onclick="postOwner()">Add Owner</button>
+
+    <h2>Add Pet</h2>
+    <input type="text" id="petName" placeholder="Pet Name" required>
+    <input type="text" id="petType" placeholder="Pet Type" required>
+    <input type="text" id="petOwnerName" placeholder="Owner Name" required>
+    <button onclick="postPet()">Add Pet</button>
+
+    <h2>Get Owner Number</h2>
+    <input type="text" id="getPetName" placeholder="Pet Name" required>
+    <button onclick="getOwnerNumber()">Get Owner Number</button>
+    <p id="ownerNumberDisplay"></p>
+
+    <h2>Update Owner Number</h2>
+    <input type="text" id="updateOwnerId" placeholder="Owner ID" required>
+    <input type="text" id="updateOwnerNumber" placeholder="New Owner Number" required>
+    <button onclick="updateOwnerNumber()">Update Owner Number</button>
+
+    <h2>Delete Owner</h2>
+    <input type="text" id="deleteOwnerId" placeholder="Owner ID" required>
+    <button onclick="deleteOwner()">Delete Owner</button>
+
+    <h2>Delete Pet</h2>
+    <input type="text" id="deletePetId" placeholder="Pet ID" required>
+    <button onclick="deletePet()">Delete Pet</button>
+
+    <h2>Owners List</h2>
+    <button onclick="fetchOwners()">Load Owners - Press to Refresh</button>
+    <table id="ownersTable" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Number</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h2>Pets List</h2>
+    <button onclick="fetchPets()">Load Pets - Press to Refresh</button>
+    <table id="petsTable" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Owner Name</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <button class="clear-button" onclick="clearFields()">Clear All Fields</button>
+</body>
+
+</html>

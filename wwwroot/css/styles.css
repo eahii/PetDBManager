@@ -1,0 +1,147 @@
+/* styles.css */
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+h2 {
+    margin-top: 20px;
+    color: #333;
+    width: 100%;
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    width: 90%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+.clear-button {
+    background-color: #f44336;
+    /* Red */
+}
+
+.clear-button:hover {
+    background-color: #e53935;
+    /* Darker Red */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input[type="text"],
+    button {
+        font-size: 14px;
+    }
+}
+
+/* Table Styles */
+table {
+    width: 90%;
+    /* Full width for tables */
+    border-collapse: collapse;
+    /* Merge borders */
+    margin: 20px 0;
+    /* Space above and below tables */
+    background-color: white;
+    /* Background color for tables */
+    border-radius: 5px;
+    /* Rounded corners */
+    overflow: hidden;
+    /* Prevent overflow of rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+}
+
+th,
+td {
+    padding: 12px;
+    /* Padding for table cells */
+    text-align: left;
+    /* Align text to the left */
+    border-bottom: 1px solid #ddd;
+    /* Bottom border for rows */
+}
+
+th {
+    background-color: #4CAF50;
+    /* Header background color */
+    color: white;
+    /* Header text color */
+    font-weight: bold;
+    /* Bold text for headers */
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+    /* Highlight row on hover */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* Zebra striping for even rows */
+}
+
+/* Responsive Design for Tables */
+@media (max-width: 600px) {
+    table {
+        width: 100%;
+        /* Full width on smaller screens */
+    }
+}
