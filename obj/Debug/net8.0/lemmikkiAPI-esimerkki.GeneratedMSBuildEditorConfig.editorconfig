@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = lemmikkiAPI_esimerkki
-build_property.ProjectDir = C:\Users\juuso\lemmikkiAPI-esimerkki - Copy\
+build_property.ProjectDir = C:\Users\juuso\Lemmikki-API\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

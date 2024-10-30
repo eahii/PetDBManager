@@ -94,54 +94,57 @@ p {
 /* Table Styles */
 table {
     width: 90%;
-    /* Full width for tables */
+    max-width: 600px;
     border-collapse: collapse;
-    /* Merge borders */
     margin: 20px 0;
-    /* Space above and below tables */
     background-color: white;
-    /* Background color for tables */
     border-radius: 5px;
-    /* Rounded corners */
     overflow: hidden;
-    /* Prevent overflow of rounded corners */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow for depth */
+    font-size: 16px;
 }
 
 th,
 td {
     padding: 12px;
-    /* Padding for table cells */
     text-align: left;
-    /* Align text to the left */
     border-bottom: 1px solid #ddd;
-    /* Bottom border for rows */
 }
 
 th {
     background-color: #4CAF50;
-    /* Header background color */
     color: white;
-    /* Header text color */
     font-weight: bold;
-    /* Bold text for headers */
 }
 
 tr:hover {
     background-color: #f1f1f1;
-    /* Highlight row on hover */
 }
 
 tbody tr:nth-child(even) {
     background-color: #f9f9f9;
-    /* Zebra striping for even rows */
+}
+
+/* Set a fixed width for table columns */
+th:nth-child(1),
+td:nth-child(1) {
+    width: 20%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 50%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 30%;
 }
 
 /* Responsive Design for Tables */
 @media (max-width: 600px) {
     table {
         width: 100%;
-        /* Full width on smaller screens */
+        font-size: 14px;
     }
 }

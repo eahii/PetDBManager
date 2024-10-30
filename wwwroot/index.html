@@ -192,6 +192,12 @@
     <input type="text" id="deletePetId" placeholder="Pet ID" required>
     <button onclick="deletePet()">Delete Pet</button>
 
+    <div style="height: 20px;"></div>
+
+    <button class="clear-button" onclick="clearFields()">Clear All Fields</button>
+
+    <div style="height: 20px;"></div>
+
     <h2>Owners List</h2>
     <button onclick="fetchOwners()">Load Owners - Press to Refresh</button>
     <table id="ownersTable" border="1">
@@ -218,8 +224,6 @@
         </thead>
         <tbody></tbody>
     </table>
-
-    <button class="clear-button" onclick="clearFields()">Clear All Fields</button>
 </body>
 
 </html>

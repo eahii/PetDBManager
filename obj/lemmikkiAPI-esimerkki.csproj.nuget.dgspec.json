@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\juuso\\lemmikkiAPI-esimerkki - Copy\\lemmikkiAPI-esimerkki.csproj": {}
+    "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj": {}
   },
   "projects": {
-    "C:\\Users\\juuso\\lemmikkiAPI-esimerkki - Copy\\lemmikkiAPI-esimerkki.csproj": {
+    "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\juuso\\lemmikkiAPI-esimerkki - Copy\\lemmikkiAPI-esimerkki.csproj",
+        "projectUniqueName": "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj",
         "projectName": "lemmikkiAPI-esimerkki",
-        "projectPath": "C:\\Users\\juuso\\lemmikkiAPI-esimerkki - Copy\\lemmikkiAPI-esimerkki.csproj",
+        "projectPath": "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj",
         "packagesPath": "C:\\Users\\juuso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\juuso\\lemmikkiAPI-esimerkki - Copy\\obj\\",
+        "outputPath": "C:\\Users\\juuso\\Lemmikki-API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\juuso\\AppData\\Roaming\\NuGet\\NuGet.Config"
