@@ -7,10 +7,12 @@
     <title>Pet and Owner Database</title>
     <link rel="stylesheet" href="css/styles.css">
     <script>
+        // Function to post a new owner to the server
         async function postOwner() {
             const name = document.getElementById('ownerName').value;
             const number = document.getElementById('ownerNumber').value;
 
+            // Send a POST request to add a new owner
             const response = await fetch('/API/V1/Owners', {
                 method: 'POST',
                 headers: {
@@ -19,6 +21,7 @@
                 body: JSON.stringify({ name, number }),
             });
 
+            // Alert the user based on the response
             if (response.ok) {
                 alert('Owner added successfully!');
                 clearFields();
@@ -27,11 +30,13 @@
             }
         }
 
+        // Function to post a new pet to the server
         async function postPet() {
             const name = document.getElementById('petName').value;
             const type = document.getElementById('petType').value;
             const ownerName = document.getElementById('petOwnerName').value;
 
+            // Send a POST request to add a new pet
             const response = await fetch('/API/V1/Pets', {
                 method: 'POST',
                 headers: {
@@ -40,6 +45,7 @@
                 body: JSON.stringify({ name, type, omistaja_name: ownerName }),
             });
 
+            // Alert the user based on the response
             if (response.ok) {
                 alert('Pet added successfully!');
                 clearFields();
@@ -49,11 +55,14 @@
             }
         }
 
+        // Function to get the owner's number based on the pet's name
         async function getOwnerNumber() {
             const petName = document.getElementById('getPetName').value;
 
+            // Send a GET request to retrieve the owner's number
             const response = await fetch(`/API/V1/Pets/${petName}/Owner/Number`);
 
+            // Display the owner's number or an error message
             if (response.ok) {
                 const number = await response.text();
                 document.getElementById('ownerNumberDisplay').innerText = `Owner Number: ${number}`;
@@ -63,12 +72,14 @@
             }
         }
 
+        // Function to fetch and display all owners
         async function fetchOwners() {
             const response = await fetch('/API/V1/Owners');
             const owners = await response.json();
             const ownersTableBody = document.getElementById('ownersTable').getElementsByTagName('tbody')[0];
             ownersTableBody.innerHTML = ''; // Clear existing rows
 
+            // Populate the table with owner data
             owners.forEach(owner => {
                 const row = ownersTableBody.insertRow();
                 row.insertCell(0).innerText = owner.id;
@@ -77,12 +88,14 @@
             });
         }
 
+        // Function to fetch and display all pets
         async function fetchPets() {
             const response = await fetch('/API/V1/Pets');
             const pets = await response.json();
             const petsTableBody = document.getElementById('petsTable').getElementsByTagName('tbody')[0];
             petsTableBody.innerHTML = ''; // Clear existing rows
 
+            // Populate the table with pet data
             pets.forEach(pet => {
                 const row = petsTableBody.insertRow();
                 row.insertCell(0).innerText = pet.id;
@@ -92,6 +105,7 @@
             });
         }
 
+        // Function to clear all input fields
         function clearFields() {
             document.getElementById('ownerName').value = '';
             document.getElementById('ownerNumber').value = '';
@@ -106,10 +120,12 @@
             document.getElementById('deletePetId').value = '';
         }
 
+        // Function to update an owner's number
         async function updateOwnerNumber() {
             const ownerId = document.getElementById('updateOwnerId').value;
             const newNumber = document.getElementById('updateOwnerNumber').value;
 
+            // Validate input fields
             if (!ownerId || !newNumber) {
                 alert('Both fields are required.');
                 return;
@@ -117,6 +133,7 @@
 
             console.log('Updating Owner:', { ownerId, newNumber });
 
+            // Send a PUT request to update the owner's number
             const response = await fetch(`/API/V1/Owners/${ownerId}`, {
                 method: 'PUT',
                 headers: {
@@ -125,6 +142,7 @@
                 body: JSON.stringify({ newNumber }),
             });
 
+            // Alert the user based on the response
             if (response.ok) {
                 alert('Owner number updated successfully!');
                 clearFields();
@@ -134,13 +152,16 @@
             }
         }
 
+        // Function to delete an owner
         async function deleteOwner() {
             const ownerId = document.getElementById('deleteOwnerId').value;
 
+            // Send a DELETE request to remove the owner
             const response = await fetch(`/API/V1/Owners/${ownerId}`, {
                 method: 'DELETE',
             });
 
+            // Alert the user based on the response
             if (response.ok) {
                 alert('Owner deleted successfully!');
                 clearFields();
@@ -149,13 +170,16 @@
             }
         }
 
+        // Function to delete a pet
         async function deletePet() {
             const petId = document.getElementById('deletePetId').value;
 
+            // Send a DELETE request to remove the pet
             const response = await fetch(`/API/V1/Pets/${petId}`, {
                 method: 'DELETE',
             });
 
+            // Alert the user based on the response
             if (response.ok) {
                 alert('Pet deleted successfully!');
                 clearFields();

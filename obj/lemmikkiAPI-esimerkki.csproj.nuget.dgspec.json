@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj": {}
+    "C:\\add comments\\PetDBManager\\lemmikkiAPI-esimerkki.csproj": {}
   },
   "projects": {
-    "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj": {
+    "C:\\add comments\\PetDBManager\\lemmikkiAPI-esimerkki.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj",
+        "projectUniqueName": "C:\\add comments\\PetDBManager\\lemmikkiAPI-esimerkki.csproj",
         "projectName": "lemmikkiAPI-esimerkki",
-        "projectPath": "C:\\Users\\juuso\\Lemmikki-API\\lemmikkiAPI-esimerkki.csproj",
+        "projectPath": "C:\\add comments\\PetDBManager\\lemmikkiAPI-esimerkki.csproj",
         "packagesPath": "C:\\Users\\juuso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\juuso\\Lemmikki-API\\obj\\",
+        "outputPath": "C:\\add comments\\PetDBManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\juuso\\AppData\\Roaming\\NuGet\\NuGet.Config"
